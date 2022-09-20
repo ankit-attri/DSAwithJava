@@ -1,6 +1,8 @@
 package BinaryTrees;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ public class Node {
         this.right=null;
 
     }
+    public Node(){};
      static Scanner sc=new Scanner(System.in);
 
     public static  Node createTree(){
@@ -74,20 +77,45 @@ public class Node {
 
 
     }
+    public static ArrayList<ArrayList<Integer>> levelOrderTraversalLCode102(Node root){
+        ArrayList<ArrayList<Integer>> res=new ArrayList<>();
+        if(root==null)return res;
+        Queue<Node> q=new LinkedList<Node>();
+        q.add(root);
+        q.add(null);  //Adding null after each level ends. Here root is only node in the first level
+        ArrayList<Integer> list=new ArrayList<>();
+        while(!q.isEmpty()){
+              Node temp=q.poll();
+              if(temp==null){
+                res.add(list);
+                list=new ArrayList<>();
+                if(q.isEmpty())return res;  //if the null is the last element in the queue return the answer list
+                q.add(null);
+
+              }else{
+                list.add(temp.data);
+                if(temp.left!=null)q.add(temp.left);
+                if(temp.right!=null)q.add(temp.right);
+              }
+        }
+        
+        return res;
+    }
     public static void main(String[] args) {
         
         Node root=createTree();
-        System.out.print("Inorder : ");
-        inorderTraversal(root);
-        System.out.println();
-        System.out.print("Preorder : ");
-        preorderTraversal(root);
-        System.out.println();
-        System.out.print("Postorder : ");
-        postorderTraversal(root);
-        System.out.println();
-        System.out.print("Level order : ");
-        levelOrderTraversal(root);
+        // System.out.print("Inorder : ");
+        // inorderTraversal(root);
+        // System.out.println();
+        // System.out.print("Preorder : ");
+        // preorderTraversal(root);
+        // System.out.println();
+        // System.out.print("Postorder : ");
+        // postorderTraversal(root);
+        // System.out.println();
+        // System.out.print("Level order : ");
+        // levelOrderTraversal(root);
+        System.out.println(levelOrderTraversalLCode102(root));
     }
 }
 
